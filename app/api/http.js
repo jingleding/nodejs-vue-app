@@ -1,3 +1,9 @@
+/**
+ * @author       jingle
+ * @email        569155371@qq.com
+ * @data         2018-08-29
+ * @description  api文件
+ */
 const util = require('../lib/util')
 
 class Http {

@@ -1,3 +1,9 @@
+/**
+ * @author       jingle
+ * @email        569155371@qq.com
+ * @data         2018-08-29
+ * @description  路由处理
+ */
 const path = require('path')
 const fs = require('fs')
 module.exports = {

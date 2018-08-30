@@ -1,3 +1,9 @@
+/**
+ * @author       jingle
+ * @email        569155371@qq.com
+ * @data         2018-08-29
+ * @description  入口文件
+ */
 var express = require('express')
 var path = require('path')
 // var fs = require('fs')
@@ -8,8 +14,18 @@ var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 var app = express()
 
+// 环境变量设置
 process.env.NODE_ENV = app.get('env') || 'production'
 console.log(`env============>${process.env.NODE_ENV}`)
+
+// 配置设置
+let config = require('../config/product.json')
+if (process.env.NODE_ENV === 'development') {
+    config = require('../config/dev.json')
+} else if (process.env.NODE_ENV === 'testing') {
+    config = require('../config/testing.json')
+}
+global.config = config
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -24,6 +40,7 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(cookieParser())
 
+// 静态资源设置
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.static(path.join(__dirname, '../node_modules/.water-release-webroot/static/nodejs-jzq-app/dist')))
 

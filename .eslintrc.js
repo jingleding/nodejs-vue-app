@@ -27,5 +27,12 @@ module.exports = {
         'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
         'indent': [1, 4],
         'operator-linebreak': 'off'
+    },
+    globals: {
+        // 需要忽略声明的全局配置变量
+        'document': true,
+        'localStorage': true,
+        'window': true,
+        'config': true
     }
 }

@@ -9,32 +9,37 @@ const http = require('../schema/http')
 
 module.exports = {
     getHttp: (service, params) => {
-        let queryStr = '?'
-        for (const key in params) {
-            queryStr += `${key}=${params[key]}&`
+        try {
+            let queryStr = '?'
+            for (const key in params) {
+                queryStr += `${key}=${params[key]}&`
+            }
+            const options = {
+                url: `${http[service].https ? 'https://' : 'http://'}${http[service].server}${http[service].path}${queryStr}`,
+                method: http[service].method,
+                json: http[service].isJson,
+                headers: http[service].headers
+            }
+            return rp(options).then(rs => {
+                return rs
+            }).catch(err => {
+                console.error(err)
+                return {}
+            })
+        } catch (error) {
+            return error
         }
-        const options = {
-            url: `${http[service].https ? 'https://' : 'http://'}${http[service].server}${http[service].path}${queryStr}`,
-            method: http[service].method,
-            json: http[service].isJson,
-            headers: http[service].headers
-        }
-        return rp(options).then(rs => {
-            return rs
-        }).catch(err => {
-            console.error(err)
-            return {}
-        })
     },
     postHttp: (service, params) => {
         try {
-            return rp({
+            const options = {
                 url: `${http[service].https ? 'https://' : 'http://'}${http[service].server}${http[service].path}`,
                 method: http[service].method,
                 json: http[service].pack,
                 headers: http[service].headers,
                 body: params
-            }).then(rs => {
+            }
+            return rp(options).then(rs => {
                 return rs
             })
         } catch (error) {

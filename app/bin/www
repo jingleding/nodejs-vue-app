@@ -1,9 +1,9 @@
-#!/usr/bin/env node
-
 /**
- * Module dependencies.
+ * @author       jingle
+ * @email        569155371@qq.com
+ * @data         2018-08-29
+ * @description  入口文件
  */
-
 var app = require('../app')
 var debug = require('debug')('firstapp:server')
 var http = require('http')

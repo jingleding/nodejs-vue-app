@@ -15,3 +15,7 @@ selenium-debug.log
 *.ntvs*
 *.njsproj
 *.sln
+.vscode
+package-lock.json
+resource.map.json
+webpack.map.json

@@ -1,7 +1,7 @@
 <template>
     <div id="index-box">
         <mt-header fixed title="我的签约">
-            <i class="mint-toast-icon mintui mintui-more">aaa</i>
+            <i slot="left" @click="$store.commit('getIsVisible')"></i>
         </mt-header>
         <div class="content">
             <h3 class="title">发起签署</h3>
@@ -49,9 +49,23 @@
             </div>
             <h3 class="title">
                 待签文件
-                <a href="">更多文件>></a>
+                <router-link to="/signInfo">
+                    更多文件>>
+                </router-link>
             </h3>
             <div class="file-list">
+                <a href="">
+                    <h4>123</h4>
+                    <div class="right-info">
+                        <strong class="for-him">待他签</strong>
+                        <span>2018-08-28</span>
+                    </div>
+                    <div class="tag-list">
+                        <span>aaaaa</span>
+                        <span class="qian">bbbb</span>
+                        <strong class="right-sign">催签</strong>
+                    </div>
+                </a>
                 <a href="">
                     <h4>123</h4>
                     <div class="right-info">
@@ -61,19 +75,21 @@
                     <div class="tag-list">
                         <span>aaaaa</span>
                         <span class="qian">bbbb</span>
+                        <strong class="right-sign">再催</strong>
                     </div>
                 </a>
             </div>
         </div>
+        <userCenter></userCenter>
     </div>
 </template>
 <script>
-import ajax from 'axios'
+import axios from 'axios'
 // import { Header, Button } from 'mint-ui'
-import aa from '../../../components/aa.vue'
+import userCenter from '../../../components/user-center.vue'
 export default {
     components: {
-        aa
+        userCenter
     },
     data () {
         return {
@@ -85,7 +101,7 @@ export default {
     },
     methods: {
         getData () {
-            ajax.get('/api/httpData',{
+            axios.get('/api/httpData',{
                 params: {
                     pageSize: 1,
                     pageNum: 5,
@@ -95,6 +111,9 @@ export default {
             }).then(rs => {
                 this.listData = Object.assign([], rs.data.data.data.list)
             })
+        },
+        visibleShow () {
+            this.visible = true
         }
     }
 }
@@ -109,11 +128,16 @@ export default {
         line-height: 45px;
     }
     .mint-header-button.is-left{
-        display: inline-block;
-        width: 22px;
-        height: 22px;
-        background: url(../img/personal_icon.png) no-repeat center;
-        background-size: contain !important;
+        margin-left: 0.5rem;
+        i{
+            cursor: pointer;
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            vertical-align: middle;
+            background: url(../img/personal_icon.png) no-repeat center;
+            background-size: contain !important;
+        }
     }
     .mint-header-button{
         flex: 0.1;
@@ -136,6 +160,7 @@ export default {
             right: 1rem;
             top: 0.5rem;
             color: red;
+            font-size: 1.2rem;
         }
     }
     .contract-list{
@@ -174,16 +199,20 @@ export default {
             line-height: 2.5rem;
         }
     }
+    
     .file-list{
         padding: 1rem 0;
         a{
             position: relative;
             display: block;
-            border-top: 1px solid #ccc;
+            border-top: 1px solid #f1f1f1;
+            border-bottom: 1px solid #f1f1f1;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
         }
         h4{
             font-size: 1.6rem;
-            margin-top: 1rem;
+            margin-top: 1.4rem;
             padding-left: 0.5rem;
             padding-right: 0.5rem;
             border-left: 2px solid #099;
@@ -212,16 +241,21 @@ export default {
                     border-left: 7px solid white;
                     border-bottom: 12px solid transparent;
                 }
+                &.for-him{
+                    background: #eb090a;
+                }
             }
             span{
                 display: block;
                 color: #666;
+                line-height: 2rem;
             }
         }
         .tag-list{
             border-top: 1px solid #f1f1f1;
-            margin-top: 1rem;
+            margin: 1.5rem 1rem 0 1rem;
             padding-top: 1rem;
+            position: relative;
             span{
                 margin-right: 0.5rem;
                 &::before{
@@ -240,6 +274,17 @@ export default {
                         background-size: contain;
                     }
                 }
+            }
+            .right-sign{
+                position: absolute;
+                right: 0;
+                top: 0.8rem;
+                display: inline-block;
+                text-align: center;
+                line-height: 1.5rem;
+                color: #eb090a;
+                border: 1px solid #eb090a;
+                padding: 0 0.3rem;
             }
         }
     }
